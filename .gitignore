@@ -1,0 +1,7 @@
+.vs/
+packages/
+Appy.Parsing/obj/
+Appy.Parsing/bin/
+Appy.Parsing.Tests/obj/
+Appy.Parsing.Tests/bin/
+artifacts/
