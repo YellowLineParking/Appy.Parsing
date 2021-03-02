@@ -30,7 +30,7 @@ function Get-ProjectsForTask($task){
 		$config = Resolve-Path ".\config.yml"
 		$yaml = [IO.File]::ReadAllText($config).Replace("`t", "    ")
 		$stringReader = new-object System.IO.StringReader([string]$yaml)
-		$Deserializer = New-Object -TypeName YamlDotNet.Serialization.Deserializer -ArgumentList $null, $null, $false
+		$Deserializer = New-Object -TypeName YamlDotNet.Serialization.Deserializer
 		$projectConfig = $Deserializer.Deserialize([System.IO.TextReader]$stringReader)
 	}
 	
