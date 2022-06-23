@@ -5,6 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace Appy.Parsing.Lexers
 {
+    /// <summary>
+    /// Creates an list of tokens from an expression
+    /// </summary>
     public class Lexer
     {
         readonly ConcurrentDictionary<string, object[]> _cache = new ConcurrentDictionary<string, object[]>();
@@ -12,6 +15,11 @@ namespace Appy.Parsing.Lexers
         readonly bool _ignoreUnmatched;
         readonly Regex _regex;
 
+        /// <summary>
+        /// Creates a lexer that is capable of convert an expression to a list of tokens
+        /// </summary>
+        /// <param name="tokenizers">Tokenizers to use when extracting tokens from the expression</param>
+        /// <param name="ignoreUnmatched">If this is false, the lexer will add any unrecognised text as strings to the token list </param>
         public Lexer(IList<Tokenizer> tokenizers, bool ignoreUnmatched)
         {
             _tokenizers = tokenizers;
@@ -19,6 +27,11 @@ namespace Appy.Parsing.Lexers
             _regex = new Regex($"({string.Join("|", _tokenizers.Select(x => x.RegexBody))})", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
         }
 
+        /// <summary>
+        /// Converts an expression into tokens
+        /// </summary>
+        /// <param name="expression">The expression to evaluate</param>
+        /// <returns></returns>
         public object[] Tokenize(string expression)
         {
             if (_cache.ContainsKey(expression))

@@ -22,6 +22,11 @@ namespace Appy.Parsing.Builder
             return this;
         }
 
+        /// <summary> Matches an expression and converts it into object </summary>
+        /// <param name="groupName">The group name to extract from the match</param>
+        /// <param name="expression">The expression to execute</param>
+        /// <param name="tokenize">The function to convert the match to object </param>
+        /// <returns></returns>
         public LexerBuilder Match(string groupName, string expression, Func<Match, object> tokenize)
         {
             _tokenizers.Add(new Tokenizer(groupName, expression, tokenize));

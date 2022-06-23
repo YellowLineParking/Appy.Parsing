@@ -5,6 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace Appy.Parsing.Parsers
 {
+    /// <summary>
+    /// Combines multiple tokens into an object array
+    /// </summary>
     public class TokenParser
     {
         static readonly Regex _wordIndexRegex = new Regex("\\w+\\((?<digits>\\d+)\\)", RegexOptions.Compiled);
