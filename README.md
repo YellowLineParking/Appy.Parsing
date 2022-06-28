@@ -6,7 +6,7 @@ It's comprised of two main components:
 - A lexer that parses text into tokens
 - A parser that converts tokens into objects.
 
-It also has a number of Builders that allow you to easily define a grammer and build parsers and lexers.
+It also has a number of Builders that allow you to easily define a grammar and build parsers and lexers.
 
 # Usage
 Let's consider the following example where we want to parse a numeric expression and convert that into the result
@@ -15,7 +15,7 @@ Input: `jan-mar dec mon-fri 10:00-19:00`
 Expected output: 
 ```
 {
-    daysOfWeek: [1, 2, 3, 4, 5, 6, 7],
+    daysOfWeek: [1, 2, 3, 4, 5],
     months: "January, February, March, December",
     times: {
         start: "10:00",
@@ -27,7 +27,7 @@ Expected output:
 ## Lexing (tokenisation)
 First of all, we need to create a Lexer that parses the individual bits into tokens. To do that, we use regular expressions.
 
-First, we need to define our tokens, we will need a token for days one for months and one for hours:
+First, we need to define our tokens, we will need a token for days, one for months and one for hours:
 
 ```
 public enum Days
@@ -111,7 +111,7 @@ public class HourRange
 Now we need to build a parser that uses this lexer to convert the tokens into meaningful objects. 
 
 ```
-var parser =    // We pass in the lexer into the builder so the resulting parser can use this lexer to convert text into tokens
+var parser =    // We pass the lexer into the builder so the resulting parser can use this lexer to convert text into tokens
                 ParserBuilder.Build(lexer)
                 // next we define rules on how to convert tokens into objects
                 // Match Jan-Mar and output new[]{ Months.January, Months.February, Months.March}
