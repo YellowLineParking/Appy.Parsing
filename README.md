@@ -1,5 +1,9 @@
 # Appy.Parsing
 
+![AppyWay logo](resources/appyway-100x100.png)
+
+## What is Appy.Parsing?
+
 Appy.Parsing is an Open source library for parsing raw text into objects
 
 It's comprised of two main components:
@@ -8,7 +12,29 @@ It's comprised of two main components:
 
 It also has a number of Builders that allow you to easily define a grammar and build parsers and lexers.
 
-# Usage
+## Packages
+
+| Package | Latest Stable |
+| --- | --- |
+| [Appy.Parsing](https://www.nuget.org/packages/Appy.Parsing) | [![Nuget Package](https://img.shields.io/badge/nuget-1.1.0-blue.svg)](https://www.nuget.org/packages/Appy.Parsing) |
+
+
+## Table of Contents
+
+- [Installing](#installing)
+- [Usage](#usage)
+
+## Installing
+
+Install using the [Appy.Parsing NuGet package](https://www.nuget.org/packages/Appy.Parsing):
+
+```
+PM> Install-Package Appy.Parsing
+```
+
+## Usage
+
+
 Let's consider the following example where we want to parse a numeric expression and convert that into the result
 
 Input: `jan-mar dec mon-fri 10:00-19:00`
@@ -24,7 +50,7 @@ Expected output:
 }
 ```
 
-## Lexing (tokenisation)
+### Lexing (tokenisation)
 First of all, we need to create a Lexer that parses the individual bits into tokens. To do that, we use regular expressions.
 
 First, we need to define our tokens, we will need a token for days, one for months and one for hours:
@@ -91,7 +117,7 @@ The resulting array will be equivalent to this:
 []{ Months.January, new RangeToken(), Months.March, Months.December, Days.Monday, new RangeToken(), Days.Friday, new LocalTime(10, 0), new RangeToken(), new LocalTime(19, 0)}
 ```
 
-## Parsing (tokens to objects)
+### Parsing (tokens to objects)
 Now that we have the tokens, we want to convert that into an object. We'll create a class to hold the data:
 ```
 public class TimeInfo
@@ -139,22 +165,22 @@ var timeInfo = parser.Parse("jan-mar dec mon-fri 10:00-19:00");
 
 ```
 
-# More options
+### More options
 
-## Lexer
+#### Lexer
 The following options are available when building a Lexer:
 
-### Match input with an expression and convert it into an object.
+##### Match input with an expression and convert it into an object.
 `Match(string groupName, string expression, Func<Match, object> tokenize)`
 
 Example:
 ```
 lexerBuilder.Match("percent", @"(?<value>\d+)\%", match => new PercentToken(int.Parse(match.Groups["value"].Value)))
 ```
-### Ignore a part of the expression
+#### Ignore a part of the expression
 ``` Ignore(string groupName, string expression)``` 
 
-### Match an expression and return a value
+#### Match an expression and return a value
 ``` Match<T>(string groupName, string expression, T value)``` 
 
 The following calls are equivalent:
@@ -164,7 +190,7 @@ Match("group", "expression", match => new object());
 Match("group", "expression", new object());
 ```
 
-### Match an expression and return a default value
+#### Match an expression and return a default value
 ``` Match<T>(string groupName, string expression)``` 
 
 The following calls are equivalent:
@@ -174,7 +200,7 @@ Match("group", "expression", match => new object());
 Match<object>("group", "expression");
 ```
 
-### Match an expression based on an attribute
+#### Match an expression based on an attribute
 ``` Match<T>()``` 
 
 This will lookup the match attribute on type T. It extracts the group name from the type and expression from the attribute.
@@ -188,7 +214,7 @@ public struct RangeToken { }
 lexerBuilder.Match<RangeToken>();
 ```
 
-### Match any value inside an Enum
+#### Match any value inside an Enum
 Looks up the enum and extracts all values and their matching expressions
 
 Example:
@@ -208,9 +234,9 @@ public enum Days
 lexerBuilder.MatchEnum<Days>();
 ```
 
-## Parser
+### Parser
 
-### Match a token of type T1 and creat a new object
+#### Match a token of type T1 and creat a new object
 ``` Match<T1>(Func<T1, object> create)``` 
 
 Example:
@@ -218,7 +244,7 @@ This expression converts "Monday" into a DateTime and the first upcoming Monday
 
 ``` parserBuilder.Match<Day>(day => DateTime.Now.AddDays(((int) day - (int) start.DayOfWeek + 7) % 7)``` 
 
-### Match two tokens and create a new object (see also overloads for 3 and 4 tokens)
+#### Match two tokens and create a new object (see also overloads for 3 and 4 tokens)
 ``` Match<T1, T2>(Func<T1, T2, object> create, MatchOptions options = MatchOptions.AllInOrder)``` 
 
 Example:
@@ -228,7 +254,7 @@ This example matches two days and creates a range between them
 
 The options define whether all tokens are necessary and in the correct order. Keep in mind that you might get default values in the callback
 
-### Create an object from a list of tokens
+#### Create an object from a list of tokens
 ``` MatchList<T1>(Func<T1[], object> create, int minimumItems = 1)``` 
 
 Example:
@@ -236,14 +262,14 @@ This example takes a list of numbers and returns the sum
 
 ```parserBuilder.MatchList<decimal>(numbers => numbers.Sum())``` 
 
-### Create an array<T> from a list of tokens
+#### Create an array<T> from a list of tokens
 ``` MatchList<T1>(int minimumItems = 1)``` 
 
 Example: this example takes a sequence of days and converts it into a Days[]
 
 ``` parserBuilder.MatchList<Days>()``` 
 
-### Create a dictionary from key value pairs
+#### Create a dictionary from key value pairs
 ``` MatchDictionary<TKey, TValue>()``` 
 
 Example: The following sample converts a sequence of months and days into a dictionary
@@ -260,7 +286,7 @@ jan mon feb tue mar sun ==>
 }
 ```
 
-### Combine multiple builders into one
+#### Combine multiple builders into one
 `CombineWith(ParserBuilder other)`
 
 In the following example the combined parser will be able to parse both Days and Months. This is useful when building discrete parsers that can be used as building blocks for other parsers.
@@ -274,3 +300,5 @@ var combinedParser = ParserBuilder.Build(lexer)
                                   .CombineWith(dayParser)
                                   .CombineWith(monthParser);
 ```
+## Contribute
+It would be awesome if you would like to contribute code or help with bugs. Just follow the guidelines [CONTRIBUTING](https://github.com/YellowLineParking/Appy.Parsing/blob/master/CONTRIBUTING.md)

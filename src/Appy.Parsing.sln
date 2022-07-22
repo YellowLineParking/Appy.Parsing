@@ -9,18 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appy.Parsing.Tests", "Appy.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{FB7DCD2D-E9C1-4773-8B80-BEFF8883A09B}"
 	ProjectSection(SolutionItems) = preProject
-		appveyor.yml = appveyor.yml
-		build.bat = build.bat
-		config.yml = config.yml
-		Functions.ps1 = Functions.ps1
-		tasks.ps1 = tasks.ps1
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{52E7C92C-0255-4A56-B52E-D45D1262FAE6}"
-	ProjectSection(SolutionItems) = preProject
-		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
-		LICENSE = LICENSE
-		README.md = README.md
+		..\build.cake = ..\build.cake
+		..\config.yml = ..\config.yml
+		..\functions.cake = ..\functions.cake
+		..\global.json = ..\global.json
 	EndProjectSection
 EndProject
 Global

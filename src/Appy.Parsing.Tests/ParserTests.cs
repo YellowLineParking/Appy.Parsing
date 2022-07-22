@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Appy.Parsing.Builder;
 using Appy.Parsing.Parsers;
 using FluentAssertions;
 using NodaTime;
 using Xunit;
-using static Appy.Parsing.Tests.TimeInfoTest;
 
 namespace Appy.Parsing.Tests
 {
@@ -68,7 +66,7 @@ namespace Appy.Parsing.Tests
         [InlineData("9 * 3 + 10 / 2 - 3", 29)]
         [InlineData("9 * 6 / 3", 18)]
         [InlineData("9 * 6 / 3 - 2", 16)]
-        public void CanSum(string expression, decimal expected) => 
+        public void CanSum(string expression, decimal expected) =>
             _subject.Parse(expression).Should().Be(expected);
     }
 
@@ -141,7 +139,7 @@ namespace Appy.Parsing.Tests
                 // Match a time-range-time token sequence into an HourRange
                 .Match<LocalTime, RangeToken, LocalTime>((start, _, end) => new HourRange { Start = start, End = end})
                 // Combine all of the above and create a new instance of TimeInfo
-                .Match<Months[], Days[], HourRange>((months, days, hourRange) => 
+                .Match<Months[], Days[], HourRange>((months, days, hourRange) =>
                     new TimeInfo
                     {
                         Months = months.ToList(),
