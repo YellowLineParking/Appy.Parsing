@@ -17,7 +17,7 @@ made this move. No public API or behaviour change is intended; only the supporte
 | Library `net10.0;net8.0`, tests `net10.0` | net10.0 and net8.0 are the supported LTS releases. net6.0 is out of support; `netstandard2.0` only needed the `Nullable` polyfill. The code has no framework-specific paths, so one test TFM covers it. | Also `net9.0`: a short-term release that net8.0 assets already cover. Keep `netstandard2.0`: .NET Framework users can stay on 1.x. |
 | Release 2.0.0 | Dropping `net6.0` and `netstandard2.0` breaks .NET Framework, net6 and net7 users: a SemVer major. | 1.2.0, as Appy.Configuration did for the same drop: undersells the break. |
 | MinVer as the reference (2.3.0, package and CLI), phase `preview`, minimum major.minor `2.0` | One versioning setup across both repos. With the minimum set, the preview published on merge reads `2.0.0-preview.0.N`, not `1.1.1-preview`. | MinVer 8: needs a workaround in `build.cake` because Cake.MinVer only exposes the phase option that MinVer 8 rejects. |
-| Central package management, Traversal build, `.sln` kept | Same layout as the reference repo. | `.slnx`: the reference still uses `.sln`. |
+| Central package management, `.sln` kept, no Traversal build | Cake builds the projects listed in `config.yml`, as before. | Traversal build as the reference: deferred. `.slnx`: the reference still uses `.sln`. |
 | xUnit v3 3.2.2 with `xunit.runner.visualstudio` 3.1.5, FluentAssertions 7.2.2 | xUnit v2 is in maintenance mode; 3.2.2 matches the sibling repos. FluentAssertions 8 has a commercial licence; 7.x is the last Apache-2.0 line. | xUnit v3 4.x: newer, not yet used alongside. xUnit v2 as the reference: leaves a migration for later. |
 | CI installs only the .NET 10 SDK (from `global.json`) | The SDK builds both TFMs; tests run on net10.0 only. | Install 8/9/10 as the reference: unused runtimes. |
 | Package validation against 1.1.0 | Guards the API from this release on. The only expected findings are the two dropped TFMs (PKV006), suppressed explicitly. | None (the reference has none): a TFM or API drop could ship silently. |
@@ -44,8 +44,8 @@ Each task is one commit. The `!` marks the breaking change.
   and XunitXml.TestLogger is dropped: their newer versions need Microsoft.Testing.Platform 2, which
   xunit.v3 3.2.2 does not use.
 - [x] 4. `chore(build): align cake build and versioning with .NET 10`: port `build.cake` from the
-  reference without the Docker tasks (Cake 6 `DotNet*` API, Traversal support); add `src/build.csproj`
-  (Microsoft.Build.Traversal 4.1.82, pinned in `global.json`); `dotnet-tools.json` cake.tool 6.3.0,
+  reference without the Docker tasks (Cake 6 `DotNet*` API; projects still come from `config.yml`,
+  no Traversal build); `dotnet-tools.json` cake.tool 6.3.0,
   minver-cli 2.3.0, gpr 0.1.294; addins Cake.MinVer 4.0.0, Cake.Yaml 6.0.0, YamlDotNet 16.2.0 (as
   the reference). `MinVerMinimumMajorMinor=2.0` in `Directory.Build.targets` and
   `WithMinimumMajorMinor("2.0")` in `build.cake`. Test: `dotnet cake` prints the same version as the
@@ -79,11 +79,10 @@ Each task is one commit. The `!` marks the breaking change.
 ## Key Files
 
 ```
-global.json                                     # SDK 10, Traversal SDK pin
+global.json                                     # SDK 10
 src/Directory.Build.props                       # package metadata
 src/Directory.Build.targets                     # MinVer and package validation settings
 src/Directory.Packages.props                    # (new) central package versions
-src/build.csproj                                # (new) Traversal build
 src/Appy.Parsing/Appy.Parsing.csproj            # library TFMs
 src/Appy.Parsing/CompatibilitySuppressions.xml  # (new) PKV006 for dropped TFMs
 src/Appy.Parsing.Tests/Appy.Parsing.Tests.csproj  # test TFM, xUnit v3

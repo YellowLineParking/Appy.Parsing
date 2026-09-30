@@ -19,9 +19,8 @@ dotnet test src/Appy.Parsing.sln --filter "FullyQualifiedName~CalculatorTest"
 ```
 
 - The cake build treats warnings as errors.
-- Cake builds, tests and packs through the Traversal project `src/build.csproj`, which picks up
-  every project under `src/`. `config.yml` lists the projects and their role (`Package` or
-  `Test`); the publish targets push only the `Package` projects.
+- `config.yml` lists the projects cake builds and their role (`Package` or `Test`). A new
+  project not listed there is skipped by the build.
 - Package versions live in `src/Directory.Packages.props` (central package management); a
   `PackageReference` in a csproj carries no `Version`.
 - Never run the `Publish` cake target or `dotnet nuget push` locally; CI publishes.
@@ -35,8 +34,7 @@ dotnet test src/Appy.Parsing.sln --filter "FullyQualifiedName~CalculatorTest"
 | `src/Directory.Build.props` | Shared build settings, package metadata |
 | `src/Directory.Build.targets` | MinVer and package validation settings |
 | `src/Directory.Packages.props` | Package versions |
-| `src/build.csproj` | Traversal project the cake build runs |
-| `global.json` | .NET 10 SDK and Traversal SDK versions |
+| `global.json` | .NET 10 SDK version |
 | `build.cake`, `functions.cake`, `config.yml` | Cake build |
 | `.github/workflows/` | `ci.yaml` on pull requests, `publish.yaml` on push to `master` or a tag |
 | `docs/` | Architecture and plans |
