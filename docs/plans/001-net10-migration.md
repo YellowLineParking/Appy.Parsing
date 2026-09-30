@@ -35,11 +35,14 @@ Each task is one commit. The `!` marks the breaking change.
 - [x] 2. `chore(deps): adopt central package management and upgrade packages`: add
   `src/Directory.Packages.props`, move all versions out of `Directory.Build.props` and the csproj
   files, drop `Moq` and `Microsoft.SourceLink.GitHub`. Versions: Microsoft.NET.Test.Sdk 18.10.1,
-  FluentAssertions 7.2.2, NodaTime 3.3.5, GitHubActionsTestLogger 3.0.5, XunitXml.TestLogger 8.0.0,
-  MinVer 2.3.0. Test: build with `-warnaserror`, 14 tests pass.
-- [ ] 3. `test: migrate tests to xUnit v3`: `xunit` to `xunit.v3` 3.2.2,
+  FluentAssertions 7.2.2, NodaTime 3.3.5, GitHubActionsTestLogger 3.0.5 (2.4.1 in task 3),
+  XunitXml.TestLogger 8.0.0 (dropped in task 3), MinVer 2.3.0. Test: build with `-warnaserror`,
+  14 tests pass.
+- [x] 3. `test: migrate tests to xUnit v3`: `xunit` to `xunit.v3` 3.2.2,
   `xunit.runner.visualstudio` 3.1.5, `OutputType` `Exe`, per the xUnit v3 migration guide. Test:
-  14 tests discovered and passing (a count of 0 is a failure).
+  14 tests discovered and passing (a count of 0 is a failure). GitHubActionsTestLogger goes to 2.4.1
+  and XunitXml.TestLogger is dropped: their newer versions need Microsoft.Testing.Platform 2, which
+  xunit.v3 3.2.2 does not use.
 - [ ] 4. `chore(build): align cake build and versioning with .NET 10`: port `build.cake` from the
   reference without the Docker tasks (Cake 6 `DotNet*` API, Traversal support); add `src/build.csproj`
   (Microsoft.Build.Traversal 4.1.82, pinned in `global.json`); `dotnet-tools.json` cake.tool 6.3.0,
