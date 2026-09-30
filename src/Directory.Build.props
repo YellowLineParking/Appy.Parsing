@@ -24,7 +24,7 @@
     <PackageProjectUrl>https://github.com/YellowLineParking/Appy.Parsing</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReleaseNotes>https://github.com/YellowLineParking/Appy.Parsing/releases</PackageReleaseNotes>
-    <PackageTags>NET6;NETCore</PackageTags>
+    <PackageTags>NET10;NET8;parsing;lexer</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -43,8 +43,6 @@
   </ItemGroup>
 
   <PropertyGroup Label="Package Versions">
-    <TunnelVisionLabsRefAssemblyAnnotatorPackageVersion>1.0.0-alpha.160</TunnelVisionLabsRefAssemblyAnnotatorPackageVersion>
-    <NullablePackageVersion>1.2.1</NullablePackageVersion>
     <NodaTimePackageVersion>2.4.18</NodaTimePackageVersion>
   </PropertyGroup>
 
