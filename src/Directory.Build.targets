@@ -1,6 +1,7 @@
 <Project>
   <Target Name="Versioning" BeforeTargets="MinVer">
     <PropertyGroup Label="Build">
+      <MinVerMinimumMajorMinor>2.0</MinVerMinimumMajorMinor>
       <MinVerDefaultPreReleasePhase>preview</MinVerDefaultPreReleasePhase>
       <MinVerVerbosity>normal</MinVerVerbosity>
     </PropertyGroup>
