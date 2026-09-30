@@ -8,8 +8,8 @@ indent_size = 4
 insert_final_newline = false
 trim_trailing_whitespace = true
 
-[*.sln]
-indent_style = tab
+[*.slnx]
+indent_size = 2
 
 [*.{csproj,vbproj,vcxproj,vcxproj.filters}]
 indent_size = 2
