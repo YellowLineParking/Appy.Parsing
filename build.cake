@@ -1,7 +1,7 @@
-#addin nuget:?package=YamlDotNet&version=8.1.2
+#addin nuget:?package=YamlDotNet&version=16.2.0
 #addin nuget:?package=System.Xml.XDocument&version=4.3.0
-#addin nuget:?package=Cake.MinVer&version=2.0.0
-#addin nuget:?package=Cake.Yaml&version=3.1.1
+#addin nuget:?package=Cake.MinVer&version=4.0.0
+#addin nuget:?package=Cake.Yaml&version=6.0.0
 
 #load "./functions.cake"
 
@@ -11,9 +11,11 @@ var artifactsPath = Context.Directory("./.artifacts");
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
 var configFilePath = "config.yml";
+var transversalBuildFilePath = $"{basePath}/build.csproj";
 var taskConfigManager = new ProjectTaskConfigurationManager();
 var projectDescriptors = ProjectLoader.Load(Context, configFilePath, basePath, configuration).Projects;
 var version = MinVer(settings => settings
+    .WithMinimumMajorMinor("2.0")
     .WithDefaultPreReleasePhase("preview")
     .WithVerbosity(MinVerVerbosity.Info));
 
@@ -38,10 +40,15 @@ Task("Clean")
 Task("Restore")
     .Does(() =>
 {
+    if (FileExists(transversalBuildFilePath))
+    {
+        return;
+    }
+
     DotNetRestore(basePath,
         new DotNetRestoreSettings
         {
-            Verbosity = DotNetCoreVerbosity.Minimal
+            Verbosity = DotNetVerbosity.Minimal
         });
 });
 
@@ -49,6 +56,20 @@ Task("Build-Project")
     .IsDependentOn("Restore")
     .Does(context =>
 {
+    if (FileExists(transversalBuildFilePath))
+    {
+        context.Information("Building projects using Transversal Build");
+
+        DotNetBuild(transversalBuildFilePath, new DotNetBuildSettings {
+            Configuration = configuration,
+            Verbosity = DotNetVerbosity.Minimal,
+            MSBuildSettings = new DotNetMSBuildSettings()
+                .TreatAllWarningsAs(MSBuildTreatAllWarningsAs.Error)
+        });
+
+        return;
+    }
+
     foreach(var projectDescriptor in projectDescriptors)
     {
         if (!taskConfigManager.CanBuild(projectDescriptor.Config)) continue;
@@ -59,7 +80,7 @@ Task("Build-Project")
             Configuration = configuration,
             NoRestore = true,
             NoIncremental = context.HasArgument("rebuild"),
-            MSBuildSettings = new DotNetCoreMSBuildSettings()
+            MSBuildSettings = new DotNetMSBuildSettings()
                 .TreatAllWarningsAs(MSBuildTreatAllWarningsAs.Error)
         });
     }
@@ -69,6 +90,24 @@ Task("Test")
     .IsDependentOn("Build-Project")
     .Does(context =>
 {
+    if (FileExists(transversalBuildFilePath))
+    {
+        context.Information("Testing projects using Transversal Build");
+
+        DotNetTest(transversalBuildFilePath, new DotNetTestSettings {
+            Configuration = configuration,
+            NoRestore = true,
+            NoBuild = true,
+            TestAdapterPath = ".",
+            Loggers = new string[] {
+                "GitHubActions;report-warnings=false"
+            },
+            Verbosity = DotNetVerbosity.Quiet
+        });
+
+        return;
+    }
+
     foreach(var projectDescriptor in projectDescriptors)
     {
         if (!taskConfigManager.CanTest(projectDescriptor.Config)) continue;
@@ -81,7 +120,6 @@ Task("Test")
             NoBuild = true,
             TestAdapterPath = ".",
             Loggers = new string[] {
-                // $"xunit;LogFilePath={MakeAbsolute(artifactsPath).FullPath}/xunit-{projectDescriptor.Config.Name}.xml",
                 "GitHubActions;report-warnings=false"
             },
             Verbosity = DotNetVerbosity.Quiet
@@ -93,6 +131,22 @@ Task("Package")
     .IsDependentOn("Test")
     .Does(context =>
 {
+    if (FileExists(transversalBuildFilePath))
+    {
+        context.Information("Packing projects using Transversal Build");
+
+        context.DotNetPack(transversalBuildFilePath, new DotNetPackSettings {
+            Configuration = configuration,
+            NoRestore = true,
+            NoBuild = true,
+            OutputDirectory = artifactsPath,
+            MSBuildSettings = new DotNetMSBuildSettings()
+                .TreatAllWarningsAs(MSBuildTreatAllWarningsAs.Error)
+        });
+
+        return;
+    }
+
     foreach(var projectDescriptor in projectDescriptors)
     {
         if (!taskConfigManager.CanPack(projectDescriptor.Config)) continue;
@@ -104,7 +158,7 @@ Task("Package")
             NoRestore = true,
             NoBuild = true,
             OutputDirectory = artifactsPath,
-            MSBuildSettings = new DotNetCoreMSBuildSettings()
+            MSBuildSettings = new DotNetMSBuildSettings()
                 .TreatAllWarningsAs(MSBuildTreatAllWarningsAs.Error)
         });
     }
@@ -163,7 +217,7 @@ Task("Publish-Package-NuGet")
 
         context.Information("Publishing {0} to Nuget", nugetPkgFilePath);
 
-        DotNetCoreNuGetPush(nugetPkgFilePath, new DotNetCoreNuGetPushSettings
+        DotNetNuGetPush(nugetPkgFilePath, new DotNetNuGetPushSettings
         {
             Source = "https://api.nuget.org/v3/index.json",
             ApiKey = apiKey,

@@ -43,7 +43,7 @@ Each task is one commit. The `!` marks the breaking change.
   14 tests discovered and passing (a count of 0 is a failure). GitHubActionsTestLogger goes to 2.4.1
   and XunitXml.TestLogger is dropped: their newer versions need Microsoft.Testing.Platform 2, which
   xunit.v3 3.2.2 does not use.
-- [ ] 4. `chore(build): align cake build and versioning with .NET 10`: port `build.cake` from the
+- [x] 4. `chore(build): align cake build and versioning with .NET 10`: port `build.cake` from the
   reference without the Docker tasks (Cake 6 `DotNet*` API, Traversal support); add `src/build.csproj`
   (Microsoft.Build.Traversal 4.1.82, pinned in `global.json`); `dotnet-tools.json` cake.tool 6.3.0,
   minver-cli 2.3.0, gpr 0.1.294; addins Cake.MinVer 4.0.0, Cake.Yaml 6.0.0, YamlDotNet 16.2.0 (as
