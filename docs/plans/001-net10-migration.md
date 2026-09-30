@@ -63,15 +63,15 @@ Each task is one commit. The `!` marks the breaking change.
 
 ## Verification
 
-- [ ] `dotnet build src/Appy.Parsing.sln -c Release -warnaserror`: 0 warnings, 0 errors.
-- [ ] `dotnet test src/Appy.Parsing.sln`: 14 passed on net10.0 (4 facts, 10 theory cases).
-- [ ] `dotnet cake` (Default target) is green, and `.artifacts/Appy.Parsing.2.0.0-preview.0.N.nupkg`
+- [x] `dotnet build src/Appy.Parsing.sln -c Release -warnaserror`: 0 warnings, 0 errors.
+- [x] `dotnet test src/Appy.Parsing.sln`: 14 passed on net10.0 (4 facts, 10 theory cases).
+- [x] `dotnet cake` (Default target) is green, and `.artifacts/Appy.Parsing.2.0.0-preview.0.N.nupkg`
   holds `lib/net8.0` and `lib/net10.0` only.
-- [ ] Package validation runs on pack; the suppression file lists only the two PKV006 entries.
-- [ ] No `net6.0`, `net9.0` or `netstandard2.0` left outside the suppression file and the docs that
+- [x] Package validation runs on pack; the suppression file lists only the two PKV006 entries.
+- [x] No `net6.0`, `net9.0` or `netstandard2.0` left outside the suppression file and the docs that
   explain the change.
-- [ ] No `.cs` change under `src/Appy.Parsing/`, so the public API is unchanged.
-- [ ] Nothing is published or tagged from a local machine.
+- [x] No `.cs` change under `src/Appy.Parsing/`, so the public API is unchanged.
+- [x] Nothing is published or tagged from a local machine.
 - [ ] Done when: the PR is merged, a maintainer tags `2.0.0`, the publish workflow is green, and
   nuget.org lists Appy.Parsing 2.0.0 for net8.0 and net10.0. Merging also publishes a
   `2.0.0-preview.0.N` package first; that is expected.
