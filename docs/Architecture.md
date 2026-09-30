@@ -36,3 +36,9 @@ graph LR
 
 `Lexer` caches the token array per input expression in a `ConcurrentDictionary`, so repeated
 expressions skip the regex pass.
+
+## Plans
+
+| Plan | Status | Summary |
+|------|--------|---------|
+| [001 .NET 10 Migration](plans/001-net10-migration.md) | Planned | Target net10.0, net9.0 and net8.0; align build and CI |
