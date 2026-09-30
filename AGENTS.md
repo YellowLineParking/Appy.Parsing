@@ -19,17 +19,24 @@ dotnet test src/Appy.Parsing.sln --filter "FullyQualifiedName~CalculatorTest"
 ```
 
 - The cake build treats warnings as errors.
-- `config.yml` lists the projects cake builds and their role (`Package` or `Test`). A new
-  project not listed there is skipped by the build.
+- Cake builds, tests and packs through the Traversal project `src/build.csproj`, which picks up
+  every project under `src/`. `config.yml` lists the projects and their role (`Package` or
+  `Test`); the publish targets push only the `Package` projects.
+- Package versions live in `src/Directory.Packages.props` (central package management); a
+  `PackageReference` in a csproj carries no `Version`.
 - Never run the `Publish` cake target or `dotnet nuget push` locally; CI publishes.
 
 ## Structure
 
 | Path | Purpose |
 |------|---------|
-| `src/Appy.Parsing/` | The library: `Builder/`, `Lexers/`, `Parsers/` |
-| `src/Appy.Parsing.Tests/` | xUnit tests |
-| `src/Directory.Build.*` | Shared build settings, package metadata, MinVer settings |
+| `src/Appy.Parsing/` | The library (`net10.0;net8.0`): `Builder/`, `Lexers/`, `Parsers/` |
+| `src/Appy.Parsing.Tests/` | xUnit v3 tests (`net10.0`) |
+| `src/Directory.Build.props` | Shared build settings, package metadata |
+| `src/Directory.Build.targets` | MinVer and package validation settings |
+| `src/Directory.Packages.props` | Package versions |
+| `src/build.csproj` | Traversal project the cake build runs |
+| `global.json` | .NET 10 SDK and Traversal SDK versions |
 | `build.cake`, `functions.cake`, `config.yml` | Cake build |
 | `.github/workflows/` | `ci.yaml` on pull requests, `publish.yaml` on push to `master` or a tag |
 | `docs/` | Architecture and plans |
@@ -38,13 +45,22 @@ dotnet test src/Appy.Parsing.sln --filter "FullyQualifiedName~CalculatorTest"
 
 - [MinVer](https://github.com/adamralph/minver) derives the version from git tags
   (`MAJOR.MINOR.PATCH`, no `v` prefix). Untagged commits get a `-preview.0.N` suffix.
+- The MinVer minimum major.minor (`2.0`) is set in both `src/Directory.Build.targets` and
+  `build.cake`; keep them in sync.
+- Pack runs package validation against the last release: `PackageValidationBaselineVersion` in
+  `src/Directory.Build.targets`, suppressions in `src/Appy.Parsing/CompatibilitySuppressions.xml`.
+  After each release, move the baseline to that version and drop suppressions that no longer
+  apply.
 - A push to `master` that touches `src/` publishes a preview package; a tag publishes that
   version. Do not create tags or releases unless a maintainer asks.
 - Dropping a target framework or public API is a breaking change: call it out in the PR.
 
 ## Tests
 
-- xUnit with FluentAssertions. Tests build real lexers and parsers through the builders; no mocks.
+- xUnit v3 (`xunit.v3` 3.2.2, `xunit.runner.visualstudio` 3.1.5, run through VSTest,
+  `GitHubActionsTestLogger` 2.4.1) with FluentAssertions 7. Stay on FluentAssertions 7: 8 has a
+  commercial licence.
+- Tests build real lexers and parsers through the builders; no mocks.
 - Add or update a test with every behaviour change, and write it first.
 
 ## Code Style
