@@ -65,3 +65,4 @@ dotnet test src/Appy.Parsing.sln --filter "FullyQualifiedName~CalculatorTest"
 ## Documentation
 
 - [docs/Architecture.md](docs/Architecture.md): start here
+- [docs/plans/](docs/plans/): implementation plans (`NNN-slug.md`)
