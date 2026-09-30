@@ -54,7 +54,7 @@ Each task is one commit. The `!` marks the breaking change.
   `PackageValidationBaselineVersion=1.1.0`, and a generated `CompatibilitySuppressions.xml` with only
   PKV006 for `net6.0` and `netstandard2.0`. Test: pack fails before the suppression file (red) and
   passes with it (green).
-- [ ] 6. `ci: update GitHub Actions for .NET 10`: `ci.yaml` and `publish.yaml` as the reference:
+- [x] 6. `ci: update GitHub Actions for .NET 10`: `ci.yaml` and `publish.yaml` as the reference:
   `actions/checkout@v6`, `actions/cache@v5`, `actions/setup-dotnet@v5` reading `global.json` in
   every job. Triggers stay as they are; no Docker steps. Test: PR checks green on all three OSes.
 - [ ] 7. `docs: update docs for .NET 10`: README supported frameworks (net8.0, net10.0; 1.x stays
