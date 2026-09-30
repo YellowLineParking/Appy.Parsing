@@ -32,7 +32,7 @@ Each task is one commit. The `!` marks the breaking change.
   `rollForward: latestFeature` (drop `projects`); library TFMs; test TFM `net10.0`; remove the
   `Nullable` package, the `Microsoft.NETCore.App.Ref` download and the annotator properties;
   `PackageTags` to `NET10;NET8;parsing;lexer`. Test: the existing 14 tests pass on net10.0.
-- [ ] 2. `chore(deps): adopt central package management and upgrade packages`: add
+- [x] 2. `chore(deps): adopt central package management and upgrade packages`: add
   `src/Directory.Packages.props`, move all versions out of `Directory.Build.props` and the csproj
   files, drop `Moq` and `Microsoft.SourceLink.GitHub`. Versions: Microsoft.NET.Test.Sdk 18.10.1,
   FluentAssertions 7.2.2, NodaTime 3.3.5, GitHubActionsTestLogger 3.0.5, XunitXml.TestLogger 8.0.0,

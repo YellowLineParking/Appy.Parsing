@@ -24,6 +24,6 @@ namespace Appy.Parsing.Tests
         [Fact]
         public void ParsesTokens() =>
             _subject.Tokenize("9 * 6 / 3 - 2")
-                .Should().BeEquivalentTo(9, new MultiToken(), 6, new DivideToken(), 3, new MinusToken(), 2);
+                .Should().BeEquivalentTo(new object[] { 9, new MultiToken(), 6, new DivideToken(), 3, new MinusToken(), 2 });
     }
 }
