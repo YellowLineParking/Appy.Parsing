@@ -50,7 +50,7 @@ Each task is one commit. The `!` marks the breaking change.
   the reference). `MinVerMinimumMajorMinor=2.0` in `Directory.Build.targets` and
   `WithMinimumMajorMinor("2.0")` in `build.cake`. Test: `dotnet cake` prints the same version as the
   `.nupkg` file name.
-- [ ] 5. `feat(packages): enable package validation against 1.1.0`: `EnablePackageValidation`,
+- [x] 5. `feat(packages): enable package validation against 1.1.0`: `EnablePackageValidation`,
   `PackageValidationBaselineVersion=1.1.0`, and a generated `CompatibilitySuppressions.xml` with only
   PKV006 for `net6.0` and `netstandard2.0`. Test: pack fails before the suppression file (red) and
   passes with it (green).
