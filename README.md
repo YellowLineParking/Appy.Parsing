@@ -21,8 +21,15 @@ It also has a number of Builders that allow you to easily define a grammar and b
 
 ## Table of Contents
 
+- [Supported frameworks](#supported-frameworks)
 - [Installing](#installing)
 - [Usage](#usage)
+
+## Supported frameworks
+
+Appy.Parsing targets `net10.0` and `net8.0`.
+
+Version 2.0 drops `net6.0` and `netstandard2.0`, so it no longer runs on .NET Framework. Projects on those frameworks can stay on [1.1.0](https://www.nuget.org/packages/Appy.Parsing/1.1.0).
 
 ## Installing
 

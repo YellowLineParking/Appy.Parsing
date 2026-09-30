@@ -57,7 +57,7 @@ Each task is one commit. The `!` marks the breaking change.
 - [x] 6. `ci: update GitHub Actions for .NET 10`: `ci.yaml` and `publish.yaml` as the reference:
   `actions/checkout@v6`, `actions/cache@v5`, `actions/setup-dotnet@v5` reading `global.json` in
   every job. Triggers stay as they are; no Docker steps. Test: PR checks green on all three OSes.
-- [ ] 7. `docs: update docs for .NET 10`: README supported frameworks (net8.0, net10.0; 1.x stays
+- [x] 7. `docs: update docs for .NET 10`: README supported frameworks (net8.0, net10.0; 1.x stays
   available for `netstandard2.0` and `net6.0`), AGENTS.md (central package management, xUnit v3),
   this plan's status. The README badge moves to 2.0.0 after the release, as a `docs(readme)` commit.
 
@@ -80,8 +80,8 @@ Each task is one commit. The `!` marks the breaking change.
 
 ```
 global.json                                     # SDK 10, Traversal SDK pin
-src/Directory.Build.props                       # package metadata, validation settings
-src/Directory.Build.targets                     # MinVer settings
+src/Directory.Build.props                       # package metadata
+src/Directory.Build.targets                     # MinVer and package validation settings
 src/Directory.Packages.props                    # (new) central package versions
 src/build.csproj                                # (new) Traversal build
 src/Appy.Parsing/Appy.Parsing.csproj            # library TFMs
