@@ -14,8 +14,8 @@ fluent builders define the grammar. Usage lives in [README.md](README.md), desig
 ```bash
 dotnet tool restore                  # cake, minver-cli, gpr
 dotnet cake                          # Default target: clean, build, test, pack into .artifacts/
-dotnet test src/Appy.Parsing.sln     # tests only
-dotnet test src/Appy.Parsing.sln --filter "FullyQualifiedName~CalculatorTest"
+dotnet test src/Appy.Parsing.slnx    # tests only
+dotnet test src/Appy.Parsing.slnx --filter "FullyQualifiedName~CalculatorTest"
 ```
 
 - The cake build treats warnings as errors.

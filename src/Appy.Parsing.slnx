@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/build/">
+    <File Path="../build.cake" />
+    <File Path="../config.yml" />
+    <File Path="../functions.cake" />
+    <File Path="../global.json" />
+  </Folder>
+  <Project Path="Appy.Parsing.Tests/Appy.Parsing.Tests.csproj" />
+  <Project Path="Appy.Parsing/Appy.Parsing.csproj" />
+</Solution>

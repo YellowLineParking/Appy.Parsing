@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 dotnet tool restore
 dotnet cake                          # clean, build, test, pack into .artifacts/
-dotnet test src/Appy.Parsing.sln     # tests only
+dotnet test src/Appy.Parsing.slnx    # tests only
 ```
 
 Never run the `Publish` cake target or `dotnet nuget push`; publishing happens in CI only.
