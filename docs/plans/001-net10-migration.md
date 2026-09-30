@@ -28,7 +28,7 @@ made this move. No public API or behaviour change is intended; only the supporte
 
 Each task is one commit. The `!` marks the breaking change.
 
-- [ ] 1. `feat(dotnet)!: target net10.0 and net8.0`: `global.json` SDK `10.0.100` with
+- [x] 1. `feat(dotnet)!: target net10.0 and net8.0`: `global.json` SDK `10.0.100` with
   `rollForward: latestFeature` (drop `projects`); library TFMs; test TFM `net10.0`; remove the
   `Nullable` package, the `Microsoft.NETCore.App.Ref` download and the annotator properties;
   `PackageTags` to `NET10;NET8;parsing;lexer`. Test: the existing 14 tests pass on net10.0.
