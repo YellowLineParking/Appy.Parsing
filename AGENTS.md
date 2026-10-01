@@ -30,7 +30,7 @@ dotnet test src/Appy.Parsing.slnx --filter "FullyQualifiedName~CalculatorTest"
 | Path | Purpose |
 |------|---------|
 | `src/Appy.Parsing/` | The library (`net10.0;net8.0`): `Builder/`, `Lexers/`, `Parsers/` |
-| `src/Appy.Parsing.Tests/` | xUnit v3 tests (`net10.0`) |
+| `src/Appy.Parsing.Tests/` | xUnit v3 tests (`net10.0;net8.0`, one run per library TFM) |
 | `src/Directory.Build.props` | Shared build settings, package metadata |
 | `src/Directory.Build.targets` | MinVer and package validation settings |
 | `src/Directory.Packages.props` | Package versions |
