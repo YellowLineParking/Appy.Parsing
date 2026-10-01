@@ -30,7 +30,7 @@ made this move. No public API or behaviour change is intended; only the supporte
 Each task is one commit. The `!` marks the breaking change.
 
 - [x] 1. `feat(dotnet)!: target net10.0 and net8.0`: `global.json` SDK `10.0.103` with
-  `rollForward: latestFeature` (drop `projects`); library TFMs; test TFM `net10.0`; remove the
+  `rollForward: latestFeature` (drop `projects`); library TFMs; test TFM `net10.0` (later net10.0;net8.0, from review); remove the
   `Nullable` package, the `Microsoft.NETCore.App.Ref` download and the annotator properties;
   `PackageTags` to `NET10;NET8;parsing;lexer`. Test: the existing 14 tests pass on net10.0.
 - [x] 2. `chore(deps): adopt central package management and upgrade packages`: add
@@ -57,7 +57,7 @@ Each task is one commit. The `!` marks the breaking change.
   passes with it (green).
 - [x] 6. `ci: update GitHub Actions for .NET 10`: `ci.yaml` and `publish.yaml` as the reference:
   `actions/checkout@v6`, `actions/cache@v5`, `actions/setup-dotnet@v5` reading `global.json` in
-  every job. Triggers stay as they are; no Docker steps. Test: PR checks green on all three OSes.
+  every job (later plus .NET 8.0.x for the net8.0 tests, from review). Triggers stay as they are; no Docker steps. Test: PR checks green on all three OSes.
 - [x] 7. `docs: update docs for .NET 10`: README supported frameworks (net8.0, net10.0; 1.x stays
   available for `netstandard2.0` and `net6.0`), AGENTS.md (central package management, xUnit v3),
   this plan's status. The README badge moves to 2.0.0 after the release, as a `docs(readme)` commit.
