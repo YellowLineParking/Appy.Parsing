@@ -82,6 +82,7 @@ Task("Test")
             NoBuild = true,
             TestAdapterPath = ".",
             Loggers = new string[] {
+                // $"xunit;LogFilePath={MakeAbsolute(artifactsPath).FullPath}/xunit-{projectDescriptor.Config.Name}.xml",
                 "GitHubActions;report-warnings=false"
             },
             Verbosity = DotNetVerbosity.Quiet

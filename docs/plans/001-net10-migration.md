@@ -28,7 +28,7 @@ made this move. No public API or behaviour change is intended; only the supporte
 
 Each task is one commit. The `!` marks the breaking change.
 
-- [x] 1. `feat(dotnet)!: target net10.0 and net8.0`: `global.json` SDK `10.0.100` with
+- [x] 1. `feat(dotnet)!: target net10.0 and net8.0`: `global.json` SDK `10.0.103` with
   `rollForward: latestFeature` (drop `projects`); library TFMs; test TFM `net10.0`; remove the
   `Nullable` package, the `Microsoft.NETCore.App.Ref` download and the annotator properties;
   `PackageTags` to `NET10;NET8;parsing;lexer`. Test: the existing 14 tests pass on net10.0.
@@ -45,7 +45,7 @@ Each task is one commit. The `!` marks the breaking change.
   xunit.v3 3.2.2 does not use.
 - [x] 4. `chore(build): align cake build and versioning with .NET 10`: port `build.cake` from the
   reference without the Docker tasks (Cake 6 `DotNet*` API; projects still come from `config.yml`,
-  no Traversal build); `dotnet-tools.json` cake.tool 6.3.0,
+  no Traversal build); `dotnet-tools.json` cake.tool 6.0.0,
   minver-cli 2.3.0, gpr 0.1.294; addins Cake.MinVer 4.0.0, Cake.Yaml 6.0.0, YamlDotNet 16.2.0 (as
   the reference). `MinVerMinimumMajorMinor=2.0` in `Directory.Build.targets` and
   `WithMinimumMajorMinor("2.0")` in `build.cake`. Test: `dotnet cake` prints the same version as the
