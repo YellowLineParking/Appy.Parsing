@@ -1,6 +1,6 @@
 # .NET 10 Migration
 
-- **Status:** In Progress
+- **Status:** Complete
 - **Branch:** `feat/net10`
 
 ## Summary
@@ -73,7 +73,7 @@ Each task is one commit. The `!` marks the breaking change.
   explain the change.
 - [x] No `.cs` change under `src/Appy.Parsing/`, so the public API is unchanged.
 - [x] Nothing is published or tagged from a local machine.
-- [ ] Done when: the PR is merged, a maintainer tags `2.0.0`, the publish workflow is green, and
+- [x] Done when: the PR is merged, a maintainer tags `2.0.0`, the publish workflow is green, and
   nuget.org lists Appy.Parsing 2.0.0 for net8.0 and net10.0. Merging also publishes a
   `2.0.0-preview.0.N` package first; that is expected.
 
@@ -87,7 +87,7 @@ src/Directory.Build.targets                     # MinVer and package validation 
 src/Directory.Packages.props                    # (new) central package versions
 src/Appy.Parsing.slnx                           # (new) solution file (SDK 10 format)
 src/Appy.Parsing/Appy.Parsing.csproj            # library TFMs
-src/Appy.Parsing/CompatibilitySuppressions.xml  # (new) PKV006 for dropped TFMs
+src/Appy.Parsing/CompatibilitySuppressions.xml  # (new) PKV006 for dropped TFMs; removed once the baseline moved to 2.0.0
 src/Appy.Parsing.Tests/Appy.Parsing.Tests.csproj  # test TFM, xUnit v3
 build.cake, dotnet-tools.json                   # Cake 6, MinVer
 .github/workflows/ci.yaml, publish.yaml         # action versions, SDK setup

@@ -41,4 +41,4 @@ expressions skip the regex pass.
 
 | Plan | Status | Summary |
 |------|--------|---------|
-| [001 .NET 10 Migration](plans/001-net10-migration.md) | In Progress | Target net10.0 and net8.0; align build and CI |
+| [001 .NET 10 Migration](plans/001-net10-migration.md) | Complete | Target net10.0 and net8.0; align build and CI |
