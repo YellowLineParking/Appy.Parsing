@@ -17,6 +17,7 @@ made this move. No public API or behaviour change is intended; only the supporte
 | Library `net10.0;net8.0`, tests `net10.0;net8.0` | net10.0 and net8.0 are the supported LTS releases. net6.0 is out of support; `netstandard2.0` only needed the `Nullable` polyfill. Tests run once per shipped library asset. | Also `net9.0`: a short-term release that net8.0 assets already cover. Keep `netstandard2.0`: .NET Framework users can stay on 1.x. |
 | Release 2.0.0 | Dropping `net6.0` and `netstandard2.0` breaks .NET Framework, net6 and net7 users: a SemVer major. | 1.2.0, as Appy.Configuration did for the same drop: undersells the break. |
 | MinVer as the reference (2.3.0, package and CLI), phase `preview`, minimum major.minor `2.0` | One versioning setup across both repos. With the minimum set, the preview published on merge reads `2.0.0-preview.0.N`, not `1.1.1-preview`. | MinVer 8: needs a workaround in `build.cake` because Cake.MinVer only exposes the phase option that MinVer 8 rejects. |
+| Repo `nuget.config` restores from nuget.org only | Central package management warns (NU1507) when a contributor's machine has more than one package source; a single cleared source avoids that without suppressing the warning. | Suppress NU1507: hides real source mix-ups. |
 | Central package management, `.slnx`, no Traversal build | `.slnx` is the SDK 10 solution format. Cake builds the projects listed in `config.yml`, as before. | Keep `.sln` as the reference. Traversal build as the reference: deferred. |
 | xUnit v3 3.2.2 with `xunit.runner.visualstudio` 3.1.5, FluentAssertions 7.2.2 | xUnit v2 is in maintenance mode; 3.2.2 matches the sibling repos. FluentAssertions 8 has a commercial licence; 7.x is the last Apache-2.0 line. | xUnit v3 4.x: newer, not yet used alongside. xUnit v2 as the reference: leaves a migration for later. |
 | CI installs the .NET 10 SDK (from `global.json`) plus .NET 8.0.x | The SDK builds both TFMs; 8.0.x provides the runtime for the net8.0 test run. | Install 8/9/10 as the reference: net9 is unused. |
@@ -80,6 +81,7 @@ Each task is one commit. The `!` marks the breaking change.
 
 ```
 global.json                                     # SDK 10
+nuget.config                                    # (new) nuget.org as the only package source
 src/Directory.Build.props                       # package metadata
 src/Directory.Build.targets                     # MinVer and package validation settings
 src/Directory.Packages.props                    # (new) central package versions

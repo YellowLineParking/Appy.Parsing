@@ -22,7 +22,8 @@ dotnet test src/Appy.Parsing.slnx --filter "FullyQualifiedName~CalculatorTest"
 - `config.yml` lists the projects cake builds and their role (`Package` or `Test`). A new
   project not listed there is skipped by the build.
 - Package versions live in `src/Directory.Packages.props` (central package management); a
-  `PackageReference` in a csproj carries no `Version`.
+  `PackageReference` in a csproj carries no `Version`. The repo `nuget.config` restores from
+  nuget.org only.
 - Never run the `Publish` cake target or `dotnet nuget push` locally; CI publishes.
 
 ## Structure
