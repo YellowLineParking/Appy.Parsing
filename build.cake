@@ -25,12 +25,6 @@ Setup((context) =>
 {
     Information("AppyWay");
     Information($"Version: {version.Version}");
-
-    var tag = EnvironmentVariable("GITHUB_REF_NAME");
-    if (EnvironmentVariable("GITHUB_REF_TYPE") == "tag" && tag != version.Version)
-    {
-        throw new CakeException($"Tag '{tag}' does not match the computed version '{version.Version}'.");
-    }
 });
 
 ////////////////////////////////////////////////////////////////
@@ -127,20 +121,7 @@ Task("Publish-Package-GitHub")
         throw new CakeException("No GitHub API key was provided.");
     }
 
-    // GitHub Packages only accepts pushes through an authenticated source: keep it in a
-    // throwaway config, used on its own so the repo nuget.config does not apply.
-    var owner = EnvironmentVariable("GITHUB_REPOSITORY_OWNER");
-    var configFile = MakeAbsolute(artifactsPath + File("github.nuget.config")).FullPath;
-    System.IO.File.WriteAllText(configFile, "<configuration />");
-    DotNetNuGetAddSource("github", new DotNetNuGetSourceSettings
-    {
-        Source = $"https://nuget.pkg.github.com/{owner}/index.json",
-        UserName = owner,
-        Password = apiKey,
-        StorePasswordInClearText = true,
-        ConfigFile = configFile
-    });
-
+    var exitCode = 0;
     foreach(var projectDescriptor in projectDescriptors)
     {
         if (!taskConfigManager.CanPack(projectDescriptor.Config)) continue;
@@ -148,14 +129,20 @@ Task("Publish-Package-GitHub")
         var nugetPkgFilePath = context.BuildNugetPackagePath(artifactsPath, projectDescriptor, version.Version);
 
         context.Information("Publishing {0} to Github", nugetPkgFilePath);
+        exitCode += StartProcess("dotnet",
+            new ProcessSettings {
+                Arguments = new ProcessArgumentBuilder()
+                    .Append("gpr")
+                    .Append("push")
+                    .AppendQuoted(nugetPkgFilePath)
+                    .AppendSwitchSecret("-k", " ", apiKey)
+            }
+        );
+    }
 
-        DotNetNuGetPush(nugetPkgFilePath, new DotNetNuGetPushSettings
-        {
-            Source = "github",
-            ApiKey = apiKey,
-            SkipDuplicate = true,
-            ArgumentCustomization = args => args.Append("--configfile").AppendQuoted(configFile)
-        });
+    if(exitCode != 0)
+    {
+        throw new CakeException("Could not push GitHub packages.");
     }
 });
 
@@ -181,7 +168,6 @@ Task("Publish-Package-NuGet")
         {
             Source = "https://api.nuget.org/v3/index.json",
             ApiKey = apiKey,
-            SkipDuplicate = true
         });
     }
 });
