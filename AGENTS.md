@@ -47,7 +47,7 @@ dotnet test src/Appy.Parsing.slnx --filter "FullyQualifiedName~CalculatorTest"
 - The MinVer minimum major.minor (`2.0`) is set in both `src/Directory.Build.targets` and
   `build.cake`; keep them in sync.
 - Pack runs package validation against the last release: `PackageValidationBaselineVersion` in
-  `src/Directory.Build.targets`, suppressions in `src/Appy.Parsing/CompatibilitySuppressions.xml`.
+  `src/Directory.Build.targets`, suppressions, when needed, in a `CompatibilitySuppressions.xml` next to the project.
   After each release, move the baseline to that version and drop suppressions that no longer
   apply.
 - A push to `master` that touches `src/` publishes a preview package; a tag publishes that
