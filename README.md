@@ -24,6 +24,7 @@ It also has a number of Builders that allow you to easily define a grammar and b
 - [Supported frameworks](#supported-frameworks)
 - [Installing](#installing)
 - [Usage](#usage)
+- [Documentation](#documentation)
 
 ## Supported frameworks
 
@@ -307,5 +308,13 @@ var combinedParser = ParserBuilder.Build(lexer)
                                   .CombineWith(dayParser)
                                   .CombineWith(monthParser);
 ```
+
+## Documentation
+
+- [Architecture](docs/Architecture.md): start here
+- [Plans](docs/plans/): implementation plans
+- [AGENTS.md](AGENTS.md) and [CLAUDE.md](CLAUDE.md): guidance for AI coding agents
+- [CONTRIBUTING](CONTRIBUTING.md): how to contribute
+
 ## Contribute
 It would be awesome if you would like to contribute code or help with bugs. Just follow the guidelines [CONTRIBUTING](https://github.com/YellowLineParking/Appy.Parsing/blob/master/CONTRIBUTING.md)
