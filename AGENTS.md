@@ -12,7 +12,7 @@ fluent builders define the grammar. Usage lives in [README.md](README.md), desig
 ## Build Commands
 
 ```bash
-dotnet tool restore                  # cake, minver-cli, gpr
+dotnet tool restore                  # cake, minver-cli
 dotnet cake                          # Default target: clean, build, test, pack into .artifacts/
 dotnet test src/Appy.Parsing.slnx    # tests only
 dotnet test src/Appy.Parsing.slnx --filter "FullyQualifiedName~CalculatorTest"
@@ -52,6 +52,8 @@ dotnet test src/Appy.Parsing.slnx --filter "FullyQualifiedName~CalculatorTest"
   apply.
 - A push to `master` that touches `src/` publishes a preview package; a tag publishes that
   version. Do not create tags or releases unless a maintainer asks.
+- Publishing skips a version a feed already has, and `publish.yaml` can also be run by hand.
+  On a tag, the build fails unless the computed version equals the tag name.
 - Dropping a target framework or public API is a breaking change: call it out in the PR.
 
 ## Tests
