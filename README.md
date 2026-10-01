@@ -16,7 +16,7 @@ It also has a number of Builders that allow you to easily define a grammar and b
 
 | Package | Latest Stable |
 | --- | --- |
-| [Appy.Parsing](https://www.nuget.org/packages/Appy.Parsing) | [![Nuget Package](https://img.shields.io/badge/nuget-1.1.0-blue.svg)](https://www.nuget.org/packages/Appy.Parsing) |
+| [Appy.Parsing](https://www.nuget.org/packages/Appy.Parsing) | [![Nuget Package](https://img.shields.io/badge/nuget-2.0.0-blue.svg)](https://www.nuget.org/packages/Appy.Parsing) |
 
 
 ## Table of Contents
